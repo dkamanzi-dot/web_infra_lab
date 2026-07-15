@@ -4,7 +4,6 @@ networks:
     ipam:
       config:
         - subnet: 172.25.0.0/24
-
 services:
   web-01:
     build:
@@ -12,26 +11,30 @@ services:
       network: host
     container_name: web-01
     hostname: web-01
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
     networks:
       lablan:
         ipv4_address: 172.25.0.11
     ports:
       - "2211:22"
       - "8080:80"
-
   web-02:
     build:
       context: ./web
       network: host
     container_name: web-02
     hostname: web-02
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
     networks:
       lablan:
         ipv4_address: 172.25.0.12
     ports:
       - "2212:22"
       - "8081:80"
-
   lb-01:
     build:
       context: ./lb
